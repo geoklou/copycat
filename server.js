@@ -13,8 +13,8 @@ var app = express();
 app.use(express.static("public"));
 
 // Database configuration
-var databaseUrl = "scraper";
-var collections = ["scrapedData"];
+var databaseUrl = "copycat";
+var collections = ["articles"];
 
 // Hook mongojs configuration to the db variable
 var db = mongojs(databaseUrl, collections);
@@ -42,7 +42,7 @@ app.get("/all", function(req, res) {
   });
 });
 
-app.get("/scrape", function(req, res) {
+app.get("/articles", function(req, res) {
   // Make a request for the news section of pc magazine
   request("https://www.pcmag.com/news", function(error, response, html) {
     // Load the html body from request into cheerio
@@ -81,7 +81,7 @@ app.get("/scrape", function(req, res) {
   });
 
   // Send a "Scrape Complete" message to the browser
-  res.send("Scrape Complete");
+  res.send("Downloaded Articles");
 });
 
 //////////////
