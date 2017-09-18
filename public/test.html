@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Articles</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+     <link rel="stylesheet" href="assets/css/style.css"> 
+     <script src="js/app.js"></script>
+  </head>
+  <body>
+    <h1>PC Magazine Articles</h1>
+    <div id="buttons">
+      <button id="saved">Saved Articles</button>
+      <button id="scrapped">Scrape New Articles</button>
+      
+     <button type="button" id="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Scraped Articles</button>
+
+  <!-- show count modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+  <!-- modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Articles Found</h4>
+      
+    </div>
+    <div class="modal-body">
+      <p>you have scraped <span id="modalContent"></span> articles</p>
+      
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
+    </div>
+
+
+    <table id="results" class="table">
+      <thead>
+        <tr>
+          <th id="article">Articles</th>
+          <!-- <th id="note">(add note button)</th>
+          <th id="delete">(delete from saved button)</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Results from DB here -->
+      </tbody>
+    </table>
+    
+  </body>
+
+  <script>
+
+        var count;
+
+          //ajax use url and get methods to get data
+          $.ajax({url: "/articles", method: "GET"})
+        .done(function(data) {
+          for (var i = 0; i<data.length; i++)
+          {
+              count++
+          }
+          console.log(count);
+          var displayCount = $("<span>");
+          displayCount.text(count);
+          $("#modalContent").append(displayCount);
+        });
+      
+  
+    </script>
+</html>
