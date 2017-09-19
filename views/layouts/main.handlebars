@@ -5,17 +5,11 @@
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-	<script src="./js/app.js"></script>
+
 	<link rel="stylesheet" type="text/css" href=".//assets/css/style.css">
 	<style>
 	
-	body {background-color: #ededed; font-family: Verdana, Geneva, Tahoma, sans-serif; /*background-image: url("./views/newspapers.JPG");*/ }
-	h1{color: blue; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif}
-	button {background-color: black; color: white; font-size: 1.1em;height: 40px;margin: 20px;padding: 10px;border-radius: 10px; }
-	.menu {display:inline; font-size: 16px; font-weight: bold; margin:20px; padding:10px; background-color:#ffffcc; border:#333 1px outset;}
-	a:hover{color:red;}
-	.box {border:#333 1px solid; padding: 5px; background-color: white;} 
+
 
 	</style>
 
@@ -26,9 +20,12 @@
 	<body>
 		{{{ body }}}
 	</body>
+
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script src="./js/app.js"></script>
 <script>
 
-var count;
+{{!-- var count;
 
 function scrapeCount(){
 	count = db.articles.find({ }).count();
@@ -37,7 +34,7 @@ function scrapeCount(){
 	var displayCount = $("<span>");
 	displayCount.html(count);
 	$("#modalContent").append(displayCount);
-}
+} --}}
 
 
 </script>
