@@ -1,0 +1,54 @@
+
+<div class="container center">
+
+<h1>PC Magazine Web Scrapper</h1>
+
+<div class="menu">
+    <a href="/">Home</a>  ||  <a href="/saved">Saved Articles</a>  ||  <a href="/scrape">Scrape New Articles</a>  
+    ||  <a href="/articles">API</a>
+  
+</div>
+
+<h2>HOME PAGE</h2>
+
+<!-- show count modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+          <!-- modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Articles Found</h4>
+              
+            </div>
+            <div class="modal-body">
+              <p>You have scraped (<span id="modalContent"></span> ) articles</p>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+ <img src="assets/images/news.gif" >
+   <!--   {{#each Article}}
+       <table>
+        <th>Title</th><th>Summary</th><th>Link</th><th>Action</th>
+       <tr>
+       <td width="29%" class="box"> {{title}}  </td>
+       <td width="40%" class="box"> {{summary}}  </td>
+       <td width="30%" class="box"> {{link}}  </td>
+       <td width="1%" class="box"> 
+        <form action="/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="save" value="false">
+          <button type="submit">Save Article</button>
+        </form>
+        {{!-- {{> Article/delete-article}} --}}
+        </tr>
+       </table>
+      {{/each}}-->
+
+</div>
+<!--container ends-->

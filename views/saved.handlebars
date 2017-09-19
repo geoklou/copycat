@@ -1,0 +1,31 @@
+
+<div class="container center">
+
+<h1>PC Magazine Web Scrapper</h1>
+
+<div class="menu">
+    <a href="/">Home</a>  ||  <a href="/saved">Saved Articles</a>  ||  <a href="/scrape">Scrape New Articles</a>
+    ||  <a href="/articles">API</a>
+</div>
+
+<h2>SAVED ARTICLES</h2>
+
+
+      {{#each Article}}
+       <table>
+         <th>Headline</th><th>Summary</th><th>URL</th><th></th>
+       <tr>
+       <td width="29%" class="box"> {{title}}  </td>
+       <td width="40%" class="box"> {{summary}}  </td>
+       <td width="30%" class="box"> {{link}}  </td>
+       <td width="1%" class="box"> 
+        <form action="/addNote {{this.id}}?_method=PUT" method="POST">
+          {{!-- <input type="hidden" name="addNote" value="false"> --}}
+          <button type="submit" id="addNote">Add Note</button>
+        </form>
+        </tr>
+       </table>
+      {{/each}}
+
+</div>
+<!--container ends-->

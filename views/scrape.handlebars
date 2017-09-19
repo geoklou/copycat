@@ -1,0 +1,53 @@
+
+<div class="container center">
+
+<h1>PC Magazine Web Scrapper</h1>
+
+<div class="menu">
+    <a href="/">Home</a>  ||  <a href="/saved">Saved Articles</a>  ||  <a href="/scrape">Scrape New Articles</a>
+    ||  <a href="/articles">API</a>
+</div>
+<div> <button type="button" id="count"  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Count Scraped</button></div>
+
+<h2> SCRAPED ARTICLES</h2>
+
+<!-- show count modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+          <!-- modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Articles Found</h4>
+              
+            </div>
+            <div class="modal-body">
+              <p>You have scraped <span id="modalContent"></span>  articles.</p>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!--articles-->
+      {{#each Article}}
+       <table>
+        <th>Headline</th><th>Summary</th><th>URL</th><th></th>
+          <tr>
+          <td width="25%" class="box"> {{title}}  </td>
+          <td width="40%" class="box"> {{summary}}  </td>
+          <td width="30%" class="box"> {{link}}  </td>
+          <td width="5%" class="box"> 
+            <form action="/{{this.id}}?_method="PUT" method="POST">
+              {{!-- <input type="hidden" name="save" value="{{this.id}}"> --}}
+              <button type="submit" id="save">Save Article</button>
+            </form>
+        </tr>
+       </table>
+      {{/each}}
+
+</div>
+<!--container ends-->
