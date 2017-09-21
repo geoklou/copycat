@@ -67,12 +67,10 @@ app.get("/", function(req, res) {
     console.log(hbsObject);
     res.render("index", hbsObject);
   })
-  // res.send("Web Scrapper Home");
 });
 
-
 // app.get("/", function(req, res) {
-//   res.send("Web Scrapper Home");
+//   // res.send("Web Scrapper Home");
 // });
 
 app.get("/scrape", function(req, res) {
@@ -110,22 +108,6 @@ app.get("/scrape", function(req, res) {
         res.render('scrape', hbsObject);
       })
     });
-      // var entry = new Article(result);
-      // entry.save(function(err, doc) {
-      //   if (err) {
-      //     // Log the error if one is encountered during the query
-      //     console.log(err);
-      //   } else {
-      //     // Otherwise, log the inserted data
-      //     console.log(doc);
-      //     count++;
-      //     console.log(count);
-      //     var displayCount = ("<span>");
-      //     displayCount.html(count);
-      //     $("#modalContent").append(displayCount);
-      //     // res.render("scrape", doc);
-      //   }
-      // });
   });
 });
 
@@ -166,43 +148,74 @@ app.get("/saved", function(req, res) {
 
 
 //button "save article" saved article
-app.put("/save/:id", function(req, res){
-  const savedDoc = new Article({
-    _id: req.params.id,
-    saved: true,
-  });
-  Article.update(savedDoc, function(err, doc){
+app.put("/articles/:id", function(req, res){
+  // save an article with the id
+  Article.findOneAndUpdate({
+    "_id": req.params.id
+  }, {
+    $set: {
+      "saved": true
+    }
+  },
+  function(err, doc){
     if (err) {
       res.send(err);
     }
     else {
-
-      res.send("SAVED: "+ doc);
+      // res.send("SAVED: "+ doc);
+      console.log(doc);
+      // res.redirect('/');
   }
 });
 });
 
 //add note
-app.post("/addNote", function(req, res){
+app.put("/articles/:id", function(req, res){
   var newNote = new Note(req.body);
   newNote.save(function(error, doc) {
   if (error) {
     res.send(error);
   }
     else {
-      Article.findOneAndUpdate({}, { $push: {"notes": doc_id}}, {new:true}, function(err, newDoc){
-        if (err) {
-          res.send(err);
+      Article.findOneAndUpdate({},
+        { $push: 
+          {
+            "_id": req.params.id,
+            "notes": doc._id
+          }
+          }, 
+        {
+          new:true}, function(err, newDoc){
+          if (err) {
+            res.send(err);
         }
-        else {
-          red.send(newDoc);
+          else {
+            // res.redirect('/review');
+            red.send(newDoc);
         }
       });
     }
-});
+  });
 });
 
-
+// Retrieve saved data from the db
+app.get("/review", function(req, res) {
+  // Find all results from the scrapedData collection in the db
+  Article.find({"saved":true}, function(error, found) {
+    // Throw any errors to the console
+    if (error) {
+      console.log(error);
+    }
+    // If there are no errors, send the data to the browser as json
+    else {
+      var hbsObject = {
+        Article: found
+      };
+      res.render('review', hbsObject);
+      // res.json(found);
+    }
+  });
+});
 
 // Listen on port 3000
 app.listen(3000, function() {

@@ -3,29 +3,71 @@
 
 <h1>PC Magazine Web Scrapper</h1>
 
-<div class="menu">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">PC Magazine Web Scrapper</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/saved">Saved Articles</a></li>
+      <li><a href="/scrape">Scrape New Articles</a></li>
+      <li><a href="/articles">API</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!--<div class="menu">
     <a href="/">Home</a>  ||  <a href="/saved">Saved Articles</a>  ||  <a href="/scrape">Scrape New Articles</a>
     ||  <a href="/articles">API</a>
-</div>
+</div>-->
 
 <h2>SAVED ARTICLES</h2>
 
-
       {{#each Article}}
-       <table>
-         <th>Headline</th><th>Summary</th><th>URL</th><th></th>
-       <tr>
-       <td width="29%" class="box"> {{title}}  </td>
-       <td width="40%" class="box"> {{summary}}  </td>
-       <td width="30%" class="box"> {{link}}  </td>
-       <td width="1%" class="box"> 
-        <form action="/addNote {{this.id}}?_method=PUT" method="POST">
-          {{!-- <input type="hidden" name="addNote" value="false"> --}}
-          <button type="submit" id="addNote">Add Note</button>
-        </form>
-        </tr>
-       </table>
-      {{/each}}
+      <table>
+      <th>Headline</th><th>Summary</th><th>URL</th><th></th><th></th>
+      <tr>
+      <td width="28%" class="box"> {{title}}  </td>
+      <td width="40%" class="box"> {{summary}}  </td>
+      <td width="30%" class="box"><a href="{{link}}" target="_blank"> {{link}} </a> </td>
+      <td width="1%" class="box"> 
+          <form action="/articles/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="note" id="note" value="">
+          <button type="submit" id="addNote" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Note</button>
+          </form>
+      </td>
+      <td width="1%" class="box"> 
+          <form action="/articles/{{this.id}}?_method=DELETE" method="POST">
+            <input type="hidden" name="delete" id="delete" value="">
+            <button type="submit" id="deleteArticle" class="btn btn-primary">Delete Article</button>
+          </form>
+      </td>
+      </tr>
+      </table>
+ 
+      <!-- show add note modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+          <!-- modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Add Note for article: <span class="blue">{{this.id}}</span>  </h4>
+            </div>
+
+            <div class="modal-body">
+              <input type="text" id="note" placeholder="enter note" size="50" >
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="saveNote" class="btn btn-default" data-dismiss="modal">Save Note</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     {{/each}}
 
 </div>
 <!--container ends-->

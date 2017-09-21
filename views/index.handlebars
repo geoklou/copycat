@@ -3,36 +3,30 @@
 
 <h1>PC Magazine Web Scrapper</h1>
 
-<div class="menu">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">PC Magazine Web Scrapper</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/saved">Saved Articles</a></li>
+      <li><a href="/scrape">Scrape New Articles</a></li>
+      <li><a href="/articles">API</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+<!--<div class="menu">
     <a href="/">Home</a>  ||  <a href="/saved">Saved Articles</a>  ||  <a href="/scrape">Scrape New Articles</a>  
     ||  <a href="/articles">API</a>
-  
-</div>
+</div>-->
 
 <h2>HOME PAGE</h2>
-
-<!-- show count modal -->
-          <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
-          <!-- modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Articles Found</h4>
-              
-            </div>
-            <div class="modal-body">
-              <p>You have scraped (<span id="modalContent"></span> ) articles</p>
-              
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>
  
- <img src="assets/images/news.gif" >
+ <img src="assets/images/news.jpg" >
    <!--   {{#each Article}}
        <table>
         <th>Title</th><th>Summary</th><th>Link</th><th>Action</th>

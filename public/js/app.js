@@ -2,11 +2,11 @@
 //Button interactions
 //======================
 
-// When user clicks the "saved articles" button, display SAVED article list
+// When user clicks the "saved article" button, display SAVED article list
 $("#save").on("click", function() {
   $.ajax({
     type: "PUT",
-    url: "/saved",
+    url: "/articles/:id",
     dataType: "json",
     data: {
       _id: req.params.id,
@@ -16,6 +16,28 @@ $("#save").on("click", function() {
 .done(function(data){
   console.log(data);
 });
+});
+
+$("#saveNote").on("click", function() {
+  $.ajax({
+    type: "PUT",
+    dataType: "json",
+    url: "/articles/:id",
+    data: {
+      _id: req.params.id,
+      notes: $("#note").val()
+    }
+  })
+  .done(function(data){
+    console.log(data);
+    var noteText = $("<p>");
+    noteText.text($("#note").val());
+    $("#NoteContent").append(noteText);
+  });
+});
+
+$("#deleteArticle").on("click", function() {
+
 });
 
 
