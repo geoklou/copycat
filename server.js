@@ -169,7 +169,7 @@ app.put("/articles/:id", function(req, res){
     }
     else {
       console.log(doc);
-      res.redirect('/review');
+      res.redirect('/');
   }
 });
 });
@@ -195,7 +195,7 @@ app.put("/articles/:id", function(req, res){
             res.send(err);
         }
           else {
-            // res.redirect('/review');
+            res.redirect('/review');
             red.send(newDoc);
         }
       });

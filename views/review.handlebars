@@ -39,10 +39,10 @@
 
        </td>
        <td width="1%" class="box"> 
-           <form action="/articles/{{this.id}}?_method=PUT" method="POST">
-          <input type="hidden" name="delete" id="delete" value="">
-          <button type="submit" id="deleteArticle" class="btn btn-primary">Delete Article</button>
-        </form>
+          <form action="/articles/{{this.id}}?_method=DESTROY" method="GET">
+            <input type="hidden" name="delete" id="delete" value="">
+            <button type="submit" id="deleteArticle" class="btn btn-primary">Delete Article</button>
+          </form>
         
         </td>
         </tr>
