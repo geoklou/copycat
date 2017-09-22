@@ -195,7 +195,7 @@ app.put("/articles/:id", function(req, res){
             res.send(err);
         }
           else {
-            res.redirect('/review');
+            // res.redirect('/');
             red.send(newDoc);
         }
       });
