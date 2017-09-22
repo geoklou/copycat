@@ -13,6 +13,7 @@
       <li><a href="/saved">Saved Articles</a></li>
       <li><a href="/scrape">Scrape New Articles</a></li>
       <li><a href="/articles">API</a></li>
+       <span><button type="button" id="save-count"  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Count Saved</button></span>
     </ul>
   </div>
 </nav>
@@ -21,6 +22,28 @@
     <a href="/">Home</a>  ||  <a href="/saved">Saved Articles</a>  ||  <a href="/scrape">Scrape New Articles</a>
     ||  <a href="/articles">API</a>
 </div>-->
+
+<!-- show count saved modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+          <!-- modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Saved Articles</h4>
+            </div>
+
+            <div class="modal-body">
+              <p>You have saved <span id="savedQty"></span> articles.</p>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
 
 <h2>SAVED ARTICLES</h2>
 
@@ -34,11 +57,11 @@
       <td width="1%" class="box"> 
           <form action="/articles/{{this.id}}?_method=PUT" method="POST">
           <input type="hidden" name="note" id="note" value="">
-          <button type="submit" id="addNote" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Note</button>
+          <button type="submit" id="addNote" class="btn btn-primary" data-toggle="modal" data-target="#newModal">Add Note</button>
           </form>
       </td>
       <td width="1%" class="box"> 
-          <form action="/articles/{{this.id}}?_method=DELETE" method="POST">
+          <form action="/articles/{{this.id}}?_method=DESTROY" method="GET">
             <input type="hidden" name="delete" id="delete" value="">
             <button type="submit" id="deleteArticle" class="btn btn-primary">Delete Article</button>
           </form>
@@ -47,7 +70,7 @@
       </table>
  
       <!-- show add note modal -->
-          <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal fade" id="newModal" role="dialog">
             <div class="modal-dialog">
           <!-- modal content-->
           <div class="modal-content">
@@ -62,6 +85,7 @@
 
             <div class="modal-footer">
               <button type="button" id="saveNote" class="btn btn-default" data-dismiss="modal">Save Note</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

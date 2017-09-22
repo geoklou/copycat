@@ -1,8 +1,8 @@
 
-//Button interactions
+//Menu and buttons
 //======================
 
-// When user clicks the "saved article" button, display SAVED article list
+// click menu "saved article" t0 see SAVED article list
 $("#save").on("click", function() {
   $.ajax({
     type: "PUT",
@@ -18,6 +18,25 @@ $("#save").on("click", function() {
 });
 });
 
+//click "delete article" button to delete article
+$("#deleteArticle").on("click", function() {
+  // Make an AJAX GET request to delete the article from the db
+  $.ajax({
+    type: "DELETE",
+    url: "/articles/:id",
+    dataType: "json",
+    // method: 'DESTROY',
+    data: {
+      _id: req.params.id
+    },
+    // On a successful call
+    success: function(response) {
+      console.log(response);
+    }
+  });
+});
+
+//save note button
 $("#saveNote").on("click", function() {
   $.ajax({
     type: "PUT",
@@ -36,20 +55,18 @@ $("#saveNote").on("click", function() {
   });
 });
 
-$("#deleteArticle").on("click", function() {
 
-});
-
-
-// When user clicks the "count scraped"" button, display number of articles in the db
+//click "count scraped"" button to see number of articles in db
+var count = 0;
 $("#count").on("click", function() {
-    scrapeCount();
+    scrapeCount();   
 });
 
 //function to count articles
-var count = 0;
 function scrapeCount(){
   $.getJSON("/articles", function(data) {
+    //reset count to zero
+    count = 0;
     for (var i = 0; i < data.length; i++){
       count++;
     }
@@ -57,6 +74,28 @@ function scrapeCount(){
       var displayCount = $("<span>");
       displayCount.html(count);
       $("#modalContent").append(displayCount);
+    });
+}
+
+var savedCount;
+$("#save-count").on("click", function() {
+  saveCount();
+  
+});
+
+function saveCount(){
+  $.getJSON("/articles", function(data) {
+    //reset savedCount to zero
+    savedCount = 0;
+    for (var i = 0; i < data.length; i++){
+      if ( data[i].saved === true ){
+        savedCount++;
+      }
+    }
+      console.log(savedCount);
+      var displaySavedCount = $("<span>");
+      displaySavedCount.html(savedCount);
+      $("#savedQty").append(displaySavedCount);
     });
 }
 

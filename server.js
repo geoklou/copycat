@@ -11,6 +11,8 @@ var cheerio = require("cheerio");
 // Bring in our Models: Article and Note
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
+
+// var paginateHelper = require('express-handlebars-paginate');
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
 
@@ -37,16 +39,6 @@ db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
-// // Database configuration
-// var databaseUrl = "copycat";
-// var collections = ["articles"];
-
-// Hook mongojs configuration to the db variable
-// var db = mongojs(databaseUrl, collections);
-// db.on("error", function(error) {
-//   console.log("Database Error:", error);
-// });
-
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
 
@@ -54,12 +46,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 // Set Handlebars
 var exphbs = require("express-handlebars");
+// exphbs.handlebars.registerHelper('paginateHelper', paginateHelper.createPagination);
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Main route (home)
+//show background and intro message if any
 app.get("/", function(req, res) {
+  //below replaced by background image - data shown in scrape page
   Article.find({}, function(error, doc) {
     var hbsObject = {
       Article: doc
@@ -68,10 +63,6 @@ app.get("/", function(req, res) {
     res.render("index", hbsObject);
   })
 });
-
-// app.get("/", function(req, res) {
-//   // res.send("Web Scrapper Home");
-// });
 
 app.get("/scrape", function(req, res) {
   // Make a request for the news section of pc magazine
@@ -111,10 +102,9 @@ app.get("/scrape", function(req, res) {
   });
 });
 
-
 //////////////// Retrieve all data from the db
 app.get("/articles", function(req, res) {
-// Find all results from the scrapedData collection in the db
+// Find all results from db
 Article.find({}, function(error, doc) {
     // Throw any errors to the console
     if (error) {
@@ -129,7 +119,7 @@ Article.find({}, function(error, doc) {
 
 // Retrieve saved data from the db
 app.get("/saved", function(req, res) {
-  // Find all results from the scrapedData collection in the db
+  // Find all results from db
   Article.find({"saved":true}, function(error, found) {
     // Throw any errors to the console
     if (error) {
@@ -142,6 +132,22 @@ app.get("/saved", function(req, res) {
       };
       res.render('saved', hbsObject);
       // res.json(found);
+    }
+  });
+});
+
+// Delete One from the DB
+app.get("/articles/:id", function(req, res) {
+  // Remove article using the objectID
+  Article.deleteOne({"_id": req.params.id}, function(error, removed) {
+    // Log errors
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    else {
+      console.log(removed);
+      res.redirect("/");
     }
   });
 });
@@ -162,9 +168,8 @@ app.put("/articles/:id", function(req, res){
       res.send(err);
     }
     else {
-      // res.send("SAVED: "+ doc);
       console.log(doc);
-      // res.redirect('/');
+      res.redirect('/review');
   }
 });
 });
@@ -201,20 +206,24 @@ app.put("/articles/:id", function(req, res){
 // Retrieve saved data from the db
 app.get("/review", function(req, res) {
   // Find all results from the scrapedData collection in the db
-  Article.find({"saved":true}, function(error, found) {
+  Article.find({"saved":true})
+    .populate("notes")
+    .exec(function(error, found){
+   
     // Throw any errors to the console
     if (error) {
       console.log(error);
     }
     // If there are no errors, send the data to the browser as json
     else {
-      var hbsObject = {
-        Article: found
-      };
-      res.render('review', hbsObject);
+      res.render("review", { Article: found });
+      // res.render('review', Article.found);
+      // res.render('review', found);
       // res.json(found);
+      console.log(found);
     }
   });
+
 });
 
 // Listen on port 3000
