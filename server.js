@@ -24,8 +24,19 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
+
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/copycat");
+// mongoose.connect("mongodb://localhost/copycat");
+var databaseUri = "mongodb://localhost/copycat";
+
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI);
+} else {
+  mongoose.connect(databaseUri);
+}
+
 var db = mongoose.connection;
 
 // Show any mongoose errors
@@ -37,9 +48,6 @@ db.on("error", function(error) {
 db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
-
-// Serve static content for the app from the "public" directory in the application directory.
-app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
@@ -147,7 +155,7 @@ app.get("/articles/:id", function(req, res) {
     else {
       console.log(removed);
       //return to homepage
-      res.redirect("/");
+      // res.redirect("/");
     }
   });
 });
@@ -168,7 +176,7 @@ app.put("/articles/:id", function(req, res){
     }
     else {
       console.log(doc);
-      res.redirect('/');
+      // res.redirect('/');
   }
 });
 });
