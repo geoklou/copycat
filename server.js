@@ -12,7 +12,6 @@ var cheerio = require("cheerio");
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
 
-// var paginateHelper = require('express-handlebars-paginate');
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
 
@@ -102,7 +101,7 @@ app.get("/scrape", function(req, res) {
   });
 });
 
-//////////////// Retrieve all data from the db
+//Retrieve all data from db
 app.get("/articles", function(req, res) {
 // Find all results from db
 Article.find({}, function(error, doc) {
@@ -147,13 +146,13 @@ app.get("/articles/:id", function(req, res) {
     }
     else {
       console.log(removed);
+      //return to homepage
       res.redirect("/");
     }
   });
 });
 
-
-//button "save article" saved article
+//button "save article" to save article
 app.put("/articles/:id", function(req, res){
   // save an article with the id
   Article.findOneAndUpdate({
@@ -203,7 +202,7 @@ app.put("/articles/:id", function(req, res){
   });
 });
 
-// Retrieve saved data from the db
+// Retrieve saved data from the db to enable viewing note
 app.get("/review", function(req, res) {
   // Find all results from the scrapedData collection in the db
   Article.find({"saved":true})
@@ -217,13 +216,10 @@ app.get("/review", function(req, res) {
     // If there are no errors, send the data to the browser as json
     else {
       res.render("review", { Article: found });
-      // res.render('review', Article.found);
-      // res.render('review', found);
       // res.json(found);
       console.log(found);
     }
   });
-
 });
 
 // Listen on port 3000

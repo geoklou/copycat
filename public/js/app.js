@@ -57,9 +57,10 @@ $("#saveNote").on("click", function() {
 
 
 //click "count scraped"" button to see number of articles in db
-var count = 0;
+var count;
 $("#count").on("click", function() {
-    scrapeCount();   
+    scrapeCount();  
+    count = 0; 
 });
 
 //function to count articles
@@ -80,7 +81,7 @@ function scrapeCount(){
 var savedCount;
 $("#save-count").on("click", function() {
   saveCount();
-  
+  savedCount = 0;
 });
 
 function saveCount(){
