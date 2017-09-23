@@ -24,6 +24,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+var port = process.env.PORT || 3000;
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
 
@@ -231,7 +232,7 @@ app.get("/review", function(req, res) {
 });
 
 // Listen on port 3000
-app.listen(3000, function() {
+app.listen(port, function() {
   console.log("App running on port 3000!");
 });
 
