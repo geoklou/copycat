@@ -1,7 +1,7 @@
 
 <div class="container center">
 
-<h1>PC Magazine Web Scrapper</h1>
+<!--<h1>PC Magazine Web Scrapper</h1>-->
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -50,16 +50,13 @@
       <td width="40%" class="box"> {{summary}}  </td>
       <td width="30%" class="box"><a href="{{link}}" target="_blank"> {{link}} </a> </td>
       <td width="1%" class="box"> 
-          <form action="/articles/{{this.id}}?_method=PUT" method="POST">
-          <input type="hidden" name="note" id="note" value="">
-          <button type="submit" id="addNote" class="btn btn-primary" data-toggle="modal" data-target="#newModal">Add Note</button>
-          </form>
+          <button type="submit" id="addNote" class="btn btn-primary" data-toggle="modal" data-target="#newModal">Add Note</button> 
       </td>
       <td width="1%" class="box"> 
-          <form action="/articles/{{this.id}}?_method=DESTROY" method="GET">
-            <input type="hidden" name="delete" id="delete" value="">
+            <form action="/articles/{{this.id}}?_method=DESTROY" method="GET">
+            <input type="hidden" name="_method" id="delete" value="DELETE">
             <button type="submit" id="deleteArticle" class="btn btn-primary">Delete Article</button>
-          </form>
+            </form>
       </td>
       </tr>
       </table>
@@ -71,15 +68,19 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Add Note for article: <span class="blue">{{this.id}}</span>  </h4>
+              <h4 class="modal-title">Add Note for article: </h4>
+             <!-- <h4 class="modal-title">Add Note for article: <span class="blue">{{this.id}}</span>  </h4>-->
             </div>
 
             <div class="modal-body">
+              <form action="/articles/{{this.id}}?_method=UPDATE" method="GET"></form>
+              {{!-- <input type="hidden" name="_method" id="note" value="PUT"> --}}
               <input type="text" id="note" placeholder="enter note" size="50" >
+              <button type="submit" id="saveNote" class="btn btn-primary" data-toggle="modal" data-target="#newModal">Save Note</button>
+              </form>
             </div>
 
             <div class="modal-footer">
-              <button type="button" id="saveNote" class="btn btn-default" data-dismiss="modal">Save Note</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>

@@ -1,7 +1,7 @@
 
 <div class="container center">
 
-<h1>PC Magazine Web Scrapper</h1>
+<!--<h1>PC Magazine Web Scrapper</h1>-->
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -24,7 +24,7 @@
        <table>
         <th>ID</th> <th>Headline</th><th>Summary</th><th>URL</th><th></th><th></th>
        <tr>
-         <td width="28%" class="box"> {{_id}}  </td>
+         {{!-- <td width="28%" class="box"> {{_id}}  </td> --}}
        <td width="28%" class="box"> {{title}}  </td>
        <td width="40%" class="box"> {{summary}}  </td>
        <td width="30%" class="box"><a href="{{link}}" target="_blank" class="blue">  {{link}} </a> </td>
@@ -34,8 +34,8 @@
 
        </td>
        <td width="1%" class="box"> 
-          <form action="/articles/{{this.id}}?_method=DESTROY" method="GET">
-            <input type="hidden" name="delete" id="delete" value="">
+                  <form action="/api/articles/{{this.id}}?_method=DESTROY" method="GET">
+            <input type="hidden" name="delete" name="_method" id="delete" value="PUT">
             <button type="submit" id="deleteArticle" class="btn btn-primary">Delete Article</button>
           </form>
         
@@ -50,9 +50,9 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Note for article: <span class="blue">{{id}}</span>  </h4>
+             <!--<h4 class="modal-title">Note for article: <span class="blue">{{id}}</span>  </h4>-->
               <br>
-              <p id="NoteContent">content here</p>
+              <h4>Note: </h4><span id="NoteContent"></span> 
             </div>
 
             <div class="modal-footer">

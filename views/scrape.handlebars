@@ -1,7 +1,6 @@
 
 <div class="container center">
-
-<h1>PC Magazine Web Scrapper</h1>
+<!--<h1>PC Magazine Web Scrapper</h1>-->
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -13,7 +12,7 @@
       <li><a href="/saved">Saved Articles</a></li>
       <li><a href="/scrape">Scrape New Articles</a></li>
       <li><a href="/review">View Notes</a></li>
-     <!-- <li><a href="/articles">API</a></li>-->
+    <!-- <li><a href="/articles">API</a></li>-->
       <span><button type="button" id="count"  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Count Scraped</button></span>
     </ul>
   </div>
@@ -51,8 +50,9 @@
           <td width="40%" class="box"> {{summary}}  </td>
           <td width="30%" class="box"><a href="{{link}}" target="_blank" class="blue">  {{link}} </a> </td>
           <td width="5%" class="box"> 
-            <form action="/articles/{{this.id}}?_method=PUT" method="POST">
-            <input type="hidden" name="saved" id="saved" value="1">
+            <form action="/api/articles/{{this.id}}?_method=UPDATE" method="GET">
+            {{!-- <form action="/articles/saved/{{this.id}}?name=_method" value="PUT"> --}}
+            <input type="hidden" name="_method" id="saved" value="PUT">
               <button type="submit" id="save" class="btn btn-primary">Save Article</button>
             </form>
         </tr>

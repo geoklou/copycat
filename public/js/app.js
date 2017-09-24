@@ -2,11 +2,11 @@
 //Menu and buttons
 //======================
 
-// click menu "saved article" t0 see SAVED article list
+// click 'save article' button to save article
 $("#save").on("click", function() {
   $.ajax({
-    type: "PUT",
-    url: "/articles/:id",
+    type: "UPDATE",
+    url: "/api/articles/:id",
     dataType: "json",
     data: {
       _id: req.params.id,
@@ -18,7 +18,6 @@ $("#save").on("click", function() {
 });
 });
 
-//click "delete article" button to delete article
 $("#deleteArticle").on("click", function() {
   // Make an AJAX GET request to delete the article from the db
   $.ajax({
@@ -35,12 +34,29 @@ $("#deleteArticle").on("click", function() {
     }
   });
 });
+//click "delete article" button to delete article
+// $("#deleteArticle").on("click", function() {
+//   // Make an AJAX GET request to delete the article from the db
+//   $.ajax({
+//     method: "DELETE",
+//     dataType: "json",
+//     url: "/api/articles/:id",
+//     data: {
+//       _id: req.params.id
+//     }
+//   })
+//   .done(function(data) {
+//     console.log(data);
+//   });
+// });
 
+/////////////////////////save note and view note
 //save note button
 $("#saveNote").on("click", function() {
   $.ajax({
-    type: "PUT",
+    type: "UPDATE",
     dataType: "json",
+    // url: "/submit",
     url: "/articles/:id",
     data: {
       _id: req.params.id,
@@ -49,8 +65,9 @@ $("#saveNote").on("click", function() {
   })
   .done(function(data){
     console.log(data);
-    var noteText = $("<p>");
+    var noteText = $("<span>");
     noteText.text($("#note").val());
+    noteText.text(data);
     $("#NoteContent").append(noteText);
   });
 });
@@ -60,7 +77,7 @@ $("#saveNote").on("click", function() {
 var count;
 $("#count").on("click", function() {
     scrapeCount();  
-    count = 0; 
+    // count = 0; 
 });
 
 //function to count articles
@@ -81,7 +98,7 @@ function scrapeCount(){
 var savedCount;
 $("#save-count").on("click", function() {
   saveCount();
-  savedCount = 0;
+  // savedCount = 0;
 });
 
 function saveCount(){

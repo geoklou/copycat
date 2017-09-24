@@ -28,14 +28,11 @@ var port = process.env.PORT || 3000;
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
 
-// Database configuration with mongoose
-// mongoose.connect("mongodb://localhost/copycat");
-var databaseUri = "mongodb://localhost/copycat";
-
 if (process.env.MONGODB_URI) {
   mongoose.connect(process.env.MONGODB_URI);
 } else {
-  mongoose.connect(databaseUri);
+  // mongoose.connect(databaseUri);
+  mongoose.connect("mongodb://localhost/copycat");
 }
 
 var db = mongoose.connection;
@@ -91,12 +88,14 @@ app.get("/scrape", function(req, res) {
       result.summary = $(this).children('p.hide-for-small-only').text();
       newArticles.push(result);
     });
-
+// console.log(newArticles);
     Article.insertMany(newArticles, function (error, docs) {
+      console.log(error);
       if (!error) {
         var hbsObject = {
           Article: docs
         };
+        
         res.render('scrape', hbsObject);
       }
     }).catch(function (error) {
@@ -160,9 +159,27 @@ app.get("/articles/:id", function(req, res) {
     }
   });
 });
+// Delete One from the DB
+// app.delete("/api/articles/:id", function(req, res) {
+//   // Remove article using the objectID
+//   var query = {"_id": req.params.id}; 
+//   Article.destroy(query, function(error, removed) {
+//     // Log errors
+//     if (error) {
+//       console.log(error);
+//       res.send(error);
+//     }
+//     else {
+//       console.log(removed);
+//       //return to homepage
+//       res.redirect("/saved");
+//       // res.render();
+//     }
+//   });
+// });
 
 //button "save article" to save article
-app.put("/articles/:id", function(req, res){
+app.get("/api/articles/:id", function(req, res){
   // save an article with the id
   Article.findOneAndUpdate({
     "_id": req.params.id
@@ -177,12 +194,12 @@ app.put("/articles/:id", function(req, res){
     }
     else {
       console.log(doc);
-      // res.redirect('/');
+      res.redirect('/');
   }
 });
 });
 
-//add note
+//save note
 app.put("/articles/:id", function(req, res){
   var newNote = new Note(req.body);
   newNote.save(function(error, doc) {
@@ -190,21 +207,20 @@ app.put("/articles/:id", function(req, res){
     res.send(error);
   }
     else {
-      Article.findOneAndUpdate({},
+      Article.findOneAndUpdate({"_id": req.params.id},
         { $push: 
           {
-            "_id": req.params.id,
             "notes": doc._id
           }
           }, 
-        {
-          new:true}, function(err, newDoc){
+        {new: true}, function(err, doc){
           if (err) {
             res.send(err);
         }
           else {
             // res.redirect('/');
-            red.send(newDoc);
+            res.send(doc);
+            console.log(doc);
         }
       });
     }
@@ -217,7 +233,6 @@ app.get("/review", function(req, res) {
   Article.find({"saved":true})
     .populate("notes")
     .exec(function(error, found){
-   
     // Throw any errors to the console
     if (error) {
       console.log(error);
@@ -226,7 +241,7 @@ app.get("/review", function(req, res) {
     else {
       res.render("review", { Article: found });
       // res.json(found);
-      console.log(found);
+      // console.log(found);
     }
   });
 });
