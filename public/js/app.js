@@ -18,22 +18,22 @@ $("#save").on("click", function() {
 });
 });
 
-$("#deleteArticle").on("click", function() {
-  // Make an AJAX GET request to delete the article from the db
-  $.ajax({
-    type: "DELETE",
-    url: "/articles/:id",
-    dataType: "json",
-    // method: 'DESTROY',
-    data: {
-      _id: req.params.id
-    },
-    // On a successful call
-    success: function(response) {
-      console.log(response);
-    }
-  });
-});
+// $("#deleteArticle").on("click", function() {
+//   // Make an AJAX GET request to delete the article from the db
+//   $.ajax({
+//     type: "DELETE",
+//     url: "/articles/:id",
+//     dataType: "json",
+//     // method: 'DESTROY',
+//     data: {
+//       _id: req.params.id
+//     },
+//     // On a successful call
+//     success: function(response) {
+//       console.log(response);
+//     }
+//   });
+// });
 //click "delete article" button to delete article
 // $("#deleteArticle").on("click", function() {
 //   // Make an AJAX GET request to delete the article from the db
@@ -58,8 +58,28 @@ $("#saveNote").on("click", function() {
     dataType: "json",
     // url: "/submit",
     url: "/articles/:id",
+    // data: {
+    //   _id: req.params.id,
+    //   notes: $("#note").val()
+    // }
+  })
+  .done(function(data){
+    console.log(data);
+    // var noteText = $("<span>");
+    // noteText.text($("#note").val());
+    // noteText.text(data);
+    // $("#NoteContent").append(noteText);
+  });
+});
+
+//view note button
+$("#viewNote").on("click", function() {
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    // url: "/submit",
+    url: "articles/notes",
     data: {
-      _id: req.params.id,
       notes: $("#note").val()
     }
   })
@@ -71,7 +91,6 @@ $("#saveNote").on("click", function() {
     $("#NoteContent").append(noteText);
   });
 });
-
 
 //click "count scraped"" button to see number of articles in db
 var count;

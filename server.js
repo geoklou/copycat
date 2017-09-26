@@ -143,27 +143,10 @@ app.get("/saved", function(req, res) {
   });
 });
 
-// Delete One from the DB
-app.get("/articles/:id", function(req, res) {
-  // Remove article using the objectID
-  Article.deleteOne({"_id": req.params.id}, function(error, removed) {
-    // Log errors
-    if (error) {
-      console.log(error);
-      res.send(error);
-    }
-    else {
-      console.log(removed);
-      //return to homepage
-      // res.redirect("/");
-    }
-  });
-});
-// Delete One from the DB
-// app.delete("/api/articles/:id", function(req, res) {
+// Delete One from the DB // works but don't know why
+// app.get("/articles/:id", function(req, res) {
 //   // Remove article using the objectID
-//   var query = {"_id": req.params.id}; 
-//   Article.destroy(query, function(error, removed) {
+//   Article.deleteOne({"_id": req.params.id}, function(error, removed) {
 //     // Log errors
 //     if (error) {
 //       console.log(error);
@@ -172,11 +155,29 @@ app.get("/articles/:id", function(req, res) {
 //     else {
 //       console.log(removed);
 //       //return to homepage
-//       res.redirect("/saved");
-//       // res.render();
+//       // res.redirect("/");
 //     }
 //   });
 // });
+
+// Delete One from the DB
+app.delete("/articless/:id", function(req, res) {
+  // Remove article using the objectID
+  var query = {"_id": req.params.id}; 
+  Article.destroy(query, function(error, removed) {
+    // Log errors
+    if (error) {
+      console.log(error);
+      res.send(error);
+    }
+    else {
+      console.log(removed);
+      //return to homepage
+      res.redirect("/saved");
+      // res.render();
+    }
+  });
+});
 
 //button "save article" to save article
 app.get("/api/articles/:id", function(req, res){
@@ -246,6 +247,22 @@ app.get("/review", function(req, res) {
   });
 });
 
+
+//Retrieve notes
+app.get("/articles/notes", function(req, res) {
+  // Find notes from db
+  Article.find({"_id": Note.body}, function(error, doc) {
+      // Throw any errors to the console
+      if (error) {
+        console.send(error);
+      }
+      // If there are no errors, send the data to the browser as json
+      else {
+        res.json(doc);
+      }
+    });
+  });
+
 // Listen on port 3000
 app.listen(port, function() {
   console.log("App running on port 3000!");
@@ -257,36 +274,4 @@ app.listen(port, function() {
 console.log("\n***********************************\n" +
             "Grabbing every thread name and link from PC Magazine:" +
             "\n***********************************\n");
-
-// Making a request for pcmag's news page. the HTML is passed as the callback's third argument
-// request("https://www.pcmag.com/news", function(error, response, html) {
-
-//   // Load the HTML into cheerio and save it to a variable
-//   // '$' of cheerio's = jQuery's '$'
-//   var $ = cheerio.load(html);
-
-//   // An empty array to save the data that we'll scrape
-//   var results = [];
-
-//   // With cheerio, find each p-tag with the "title" class
-//   // (i: iterator. element: the current element)
-//   $("div.article-deck").each(function(i, element) {
-//     var title = $(element).children('a').text().replace('Read More', '');
-//     // in selected element. look for child element a-tags, save values with "href" attributes 
-//     var link = $(element).children().attr("href");
-//     // in selected element, look for child element p-tags with class for summary/gist & save the values
-//     var summary = $(element).children('p.hide-for-small-only').text();
-//     // var image = $(element).children().attr('img src');
-    
-//     // Save these results in an object that we'll push into the results array we defined earlier
-//     results.push({
-//       title: title,
-//       summary: summary,
-//       link: link
-// });
-//   // Log results with cheerio
-//   console.log(results);
-//   });
-// });
-
 

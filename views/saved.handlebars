@@ -53,7 +53,7 @@
           <button type="submit" id="addNote" class="btn btn-primary" data-toggle="modal" data-target="#newModal">Add Note</button> 
       </td>
       <td width="1%" class="box"> 
-            <form action="/articles/{{this.id}}?_method=DESTROY" method="GET">
+            <form action="/articless/{{this.id}}?_method=DELETE" method="GET">
             <input type="hidden" name="_method" id="delete" value="DELETE">
             <button type="submit" id="deleteArticle" class="btn btn-primary">Delete Article</button>
             </form>
@@ -74,7 +74,7 @@
 
             <div class="modal-body">
               <form action="/articles/{{this.id}}?_method=UPDATE" method="GET"></form>
-              {{!-- <input type="hidden" name="_method" id="note" value="PUT"> --}}
+              <input type="hidden" name="_method" id="note" value="PUT">
               <input type="text" id="note" placeholder="enter note" size="50" >
               <button type="submit" id="saveNote" class="btn btn-primary" data-toggle="modal" data-target="#newModal">Save Note</button>
               </form>
